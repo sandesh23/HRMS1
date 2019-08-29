@@ -57,3 +57,38 @@ class JobTitleViewSet(ModelViewSet):
 class CountryViewSet(ModelViewSet):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
+
+
+class PersonalDetailsViewSet(ModelViewSet):
+    queryset = PersonalDetails.objects.all()
+    serializer_class = PersonalDetailsSerializer
+
+
+class WorkExperienceViewSet(ModelViewSet):
+    queryset = WorkExperience.objects.all()
+    serializer_class = WorkExperienceSerializer
+
+
+class EducationViewSet(ModelViewSet):
+    queryset = Education.objects.all()
+    serializer_class = EducationSerializer
+
+
+class WorkDetailViewSet(ModelViewSet):
+    queryset = WorkDetails.objects.all()
+    serializer_class = WorkDetailsSerializer
+
+
+class SummaryViewSet(ModelViewSet):
+    queryset = Summary.objects.all()
+    serializer_class = SummarySerializer
+
+
+class DependantViewSet(ModelViewSet):
+    queryset = Dependant.objects.all()
+    serializer_class = DependantSerializer
+
+
+
+
+
