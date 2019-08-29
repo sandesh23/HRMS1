@@ -9,8 +9,8 @@ class BasicInfo(models.Model):
     middle_name = models.CharField(max_length=50, null=False)
     last_name = models.CharField(max_length=50, null=False)
     email_id = models.EmailField(null=False, unique=True)
-    nic = models.CharField(max_length=16, unique=True,null=False)
-    image = models.ImageField(upload_to='documents/%Y/%M/%d/',max_length=100)
+    nic = models.CharField(max_length=16, unique=True, null=False)
+    image = models.ImageField(upload_to='documents/%Y/%M/%d/', max_length=100)
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
@@ -167,7 +167,7 @@ class WorkExperience(models.Model):
     id = models.IntegerField(primary_key=True)
     emp_id = models.IntegerField(null=False)
     previous_company = models.CharField(max_length=50, null=False)
-    job_id = models.ForeignKey(JobTitle,on_delete=models.CASCADE)
+    job_id = models.ForeignKey(JobTitle, on_delete=models.CASCADE)
     from_date = models.DateTimeField(null=False)
     to_date = models.DateTimeField(null=False)
 
@@ -177,9 +177,11 @@ class WorkExperience(models.Model):
 
 class Education(models.Model):
     education_id = models.IntegerField(primary_key=True)
-    emp_id = models.ForeignKey(BasicInfo,null=False,on_delete=models.CASCADE)
-    degree_id = models.ForeignKey(Degree,null=False,on_delete=models.CASCADE)
+    emp_id = models.ForeignKey(BasicInfo, null=False, on_delete=models.CASCADE)
+    degree_id = models.ForeignKey(Degree, null=False,on_delete=models.CASCADE)
     field = models.CharField(max_length=100, null=False)
+    degree_id = models.ForeignKey(Degree, null=False,on_delete=models.CharField)
+    field = models.ForeignKey(Degree, on_delete=models.CASCADE)
     date_of_completion = models.DateField(null=False)
     additional_notes = models.CharField(max_length=50)
 
@@ -196,7 +198,7 @@ class WorkDetails(models.Model):
     location_id = models.ForeignKey(Location, on_delete=models.CASCADE)
     Date_of_Joining = models.DateField(null=False)
     PAN_number = models.CharField(max_length=10, unique=True, null=False)
-    apprisal_manager = models.ForeignKey(BasicInfo, on_delete=models.CASCADE, related_name='basic_info_apprisal_manager')
+    apprisal_manager = models.ForeignKey(BasicInfo, on_delete=models.CASCADE, related_name='apprisal_manager')
     seating_location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='location')
     mentor = models.ForeignKey(BasicInfo, on_delete=models.CASCADE, related_name='mentor')
     source_id = models.ForeignKey(SourceOfHire, on_delete=models.CASCADE)

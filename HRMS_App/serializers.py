@@ -5,7 +5,7 @@ from rest_framework.serializers import ModelSerializer
 class BasicInfoSerializer(ModelSerializer):
     class Meta:
         model = BasicInfo
-        fields ="__all__"
+        fields = "__all__"
 
 
 class DepartmentSerializer(ModelSerializer):
@@ -52,7 +52,7 @@ class SourceOfHireSerializer(ModelSerializer):
 
 class EmployeeTypeSerializer(ModelSerializer):
     class Meta:
-        model =EmployeeType
+        model = EmployeeType
         fields = "__all__"
 
 
