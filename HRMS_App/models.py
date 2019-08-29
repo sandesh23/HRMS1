@@ -16,3 +16,4 @@ class BasicInfo(models.Model):
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
+
