@@ -177,8 +177,8 @@ class WorkExperience(models.Model):
 
 class Education(models.Model):
     education_id = models.IntegerField(primary_key=True)
-    emp_id = models.ForeignKey(BasicInfo,null=False)
-    degree_id = models.ForeignKey(Degree,null=False)
+    emp_id = models.ForeignKey(BasicInfo,null=False,on_delete=models.CASCADE)
+    degree_id = models.ForeignKey(Degree,null=False,on_delete=models.CharField)
     field = models.ForeignKey(Degree, on_delete=models.CASCADE)
     date_of_completion = models.DateField(null=False)
     additional_notes = models.CharField(max_length=50)
