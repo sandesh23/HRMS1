@@ -18,6 +18,8 @@ class BasicInfo(models.Model):
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
     is_deleted = models.BooleanField(default=True, null=False)
 
+    class Meta:
+        db_table = 'Basic_info'
 
 class Department(models.Model):
     dept_id = models.IntegerField(primary_key=True)
@@ -28,6 +30,8 @@ class Department(models.Model):
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
     is_deleted = models.BooleanField(default=True, null=False)
 
+    class Meta:
+        db_table = 'Department'
 
 class Role(models.Model):
     role_id = models.IntegerField(primary_key=True)
@@ -37,6 +41,9 @@ class Role(models.Model):
     modified_by = models.CharField(max_length=50, null=False)
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
     is_deleted = models.BooleanField(default=True, null=False)
+
+    class Meta:
+        db_table = 'Role'
 
 
 class Degree(models.Model):
@@ -48,13 +55,17 @@ class Degree(models.Model):
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
     is_deleted = models.BooleanField(default=True, null=False)
 
+    class Meta:
+        db_table = 'Degree'
 
-class state(models.model):
+class State(models.Model):
     state_id = models.IntegerField(primary_key=True)
     state_name = models.CharField(max_length=50, null=False)
 
+    class Meta:
+        db_table = 'State'
 
-class Designation(models.model):
+class Designation(models.Model):
     designation_id = models.IntegerField(primary_key=True)
     designation_name = models.CharField(max_length=50, null=False)
     added_by = models.CharField(max_length=50, null=False)
@@ -63,7 +74,9 @@ class Designation(models.model):
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
     is_deleted = models.BooleanField(default=True, null=False)
 
-    
+    class Meta:
+        db_table = 'Designation'
+
 class Location(models.Model):
     location_id = models.CharField(primary_key=True,max_length=50)
     location_name =models.CharField(max_length=50,null=False)
@@ -72,6 +85,9 @@ class Location(models.Model):
     modified_by=models.CharField(max_length=50,null=False)
     modified_time=models.TimeField(auto_now_add=True,null=False)
     is_deleted=models.BooleanField(default=True)
+
+    class Meta:
+        db_table = 'Location'
 
 class SourceOfHire(models.Model):
     source_id=models.CharField(primary_key=True,max_length=50)
@@ -82,6 +98,9 @@ class SourceOfHire(models.Model):
     modified_time=models.TimeField(auto_now_add=True,null=False)
     is_deleted=models.BooleanField(default=True)
 
+    class Meta:
+        db_table ='SourceOfHire'
+
 class EmployeeType(models.Model):
     emp_id =models.CharField(primary_key=True,max_length=50)
     emp_type =models.CharField(max_length=50,null=False)
@@ -91,7 +110,10 @@ class EmployeeType(models.Model):
     modified_time = models.TimeField(auto_now_add=True, null=False)
     is_deleted = models.BooleanField(default=True)
 
-class job_title(models.Model):
+    class Meta:
+        db_table = 'EmployeeType'
+
+class JobTitle(models.Model):
     job_id = models.CharField(primary_key=True, max_length=50)
     job_title = models.CharField(max_length=50, null=False)
     added_by = models.CharField(max_length=50, null=False)
@@ -100,8 +122,12 @@ class job_title(models.Model):
     modified_time = models.TimeField(auto_now_add=True, null=False)
     is_deleted = models.BooleanField(default=True)
 
-class country(models.Model):
+    class Meta:
+        db_table = 'JobTitle'
+
+class Country(models.Model):
     country_id = models.CharField(primary_key=True, max_length=50)
     country_name = models.CharField(max_length=50, null=False)
 
-
+    class Meta:
+        db_table = 'Country'
