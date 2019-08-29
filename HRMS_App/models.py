@@ -11,6 +11,7 @@ class BasicInfo(models.Model):
     last_name = models.CharField(max_length=50, null=False)
     email_id = models.EmailField(null=False, unique=True)
     nic = models.CharField(max_length=16, unique=True,null=False)
+    image = models.ImageField(upload_to='documents/')
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
