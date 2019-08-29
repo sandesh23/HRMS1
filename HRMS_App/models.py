@@ -18,6 +18,8 @@ class BasicInfo(models.Model):
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
     is_deleted = models.BooleanField(default=True, null=False)
 
+    class Meta:
+        db_table = 'Basic_info'
 
 class Department(models.Model):
     dept_id = models.IntegerField(primary_key=True)
@@ -28,6 +30,8 @@ class Department(models.Model):
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
     is_deleted = models.BooleanField(default=True, null=False)
 
+    class Meta:
+        db_table = 'Department'
 
 class Role(models.Model):
     role_id = models.IntegerField(primary_key=True)
@@ -37,6 +41,9 @@ class Role(models.Model):
     modified_by = models.CharField(max_length=50, null=False)
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
     is_deleted = models.BooleanField(default=True, null=False)
+
+    class Meta:
+        db_table = 'Role'
 
 
 class Degree(models.Model):
@@ -48,13 +55,17 @@ class Degree(models.Model):
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
     is_deleted = models.BooleanField(default=True, null=False)
 
+    class Meta:
+        db_table = 'Degree'
 
-class state(models.model):
+class State(models.Model):
     state_id = models.IntegerField(primary_key=True)
     state_name = models.CharField(max_length=50, null=False)
 
+    class Meta:
+        db_table = 'State'
 
-class Designation(models.model):
+class Designation(models.Model):
     designation_id = models.IntegerField(primary_key=True)
     designation_name = models.CharField(max_length=50, null=False)
     added_by = models.CharField(max_length=50, null=False)
@@ -63,69 +74,60 @@ class Designation(models.model):
     modified_time = models.DateTimeField(auto_now_add=True, blank=True)
     is_deleted = models.BooleanField(default=True, null=False)
 
+    class Meta:
+        db_table = 'Designation'
 
-class PersonalDetails(models.Model):
-    ID = models.IntegerField(primary_key=True)
-    Employee_id=models.IntegerField(max_length=50,null=False)
-    mobile=models.IntegerField(max_length=10,null=False)
-    gender=models.CharField(max_length=3,null=False)
-    bloodgroup=models.CharField(max_length=10,null=False)
-    other_mobile=models.IntegerField(max_length=10)
-    dateofbirth=models.DateField(null=True)
-    permanent_address=models.CharField(max_length=50,null=False)
-    present_address=models.CharField(max_length=10,null=False)
-    maretial_status=models.CharField(max_length=1,null=False)
-    age=models.FloatField(null=False)
-    wedding_date=models.DateField
-    spouse_name=models.CharField(max_length=50)
-    about_me=models.CharField(max_length=50)
-    relieving_date=models.DateField(null=False)
-    tags=models.CharField(max_length=10)
+class Location(models.Model):
+    location_id = models.CharField(primary_key=True,max_length=50)
+    location_name =models.CharField(max_length=50,null=False)
+    added_by=models.CharField(max_length=50,null=False)
+    added_time=models.DateTimeField(auto_now_add=True,null=False)
+    modified_by=models.CharField(max_length=50,null=False)
+    modified_time=models.TimeField(auto_now_add=True,null=False)
+    is_deleted=models.BooleanField(default=True)
 
-class work_experiance(models.Model):
-    id=models.IntegerField(primary_key=True)
-    emp_id=models.IntegerField(max_length=50,null=False)
-    previous_company=models.CharField(max_length=50,null=False)
-    job_id=models.IntegerField(max_length=50,null=False)
-    from_date=models.DateTimeField(null=False)
-    to_date=models.DateTimeField(null=False)
+    class Meta:
+        db_table = 'Location'
 
+class SourceOfHire(models.Model):
+    source_id=models.CharField(primary_key=True,max_length=50)
+    source_name=models.CharField(max_length=50,null=False)
+    added_by=models.CharField(max_length=50,null=False)
+    added_time=models.DateTimeField(auto_now_add=True,blank=True)
+    modified_by=models.CharField(max_length=50,null=False)
+    modified_time=models.TimeField(auto_now_add=True,null=False)
+    is_deleted=models.BooleanField(default=True)
 
-class Education(models.Model):
-    educationd_id=models.IntegerField(primary_key=True)
-    emp_id=models.ForeignKey(null=False)
-    degree_id=models.ForeignKey(null=False)
-    field=models.ForeignKey(fieldofstudy,on_delete=models.CASCADE)
-    date_of_completion=models.DateField(null=False)
-    additional_notes=models.CharField(max_length=50)
+    class Meta:
+        db_table ='SourceOfHire'
 
+class EmployeeType(models.Model):
+    emp_id =models.CharField(primary_key=True,max_length=50)
+    emp_type =models.CharField(max_length=50,null=False)
+    added_by = models.CharField(max_length=50, null=False)
+    added_time = models.DateTimeField(auto_now_add=True, blank=True)
+    modified_by = models.CharField(max_length=50, null=False)
+    modified_time = models.TimeField(auto_now_add=True, null=False)
+    is_deleted = models.BooleanField(default=True)
 
-class work_details(models.Model):
-    id=models.IntegerField(primary_key=True)
-    employee_id=models.ForeignKey(BasicInfo,on_delete=models.CASCADE)
-    department_id=models.ForeignKey(Department,on_delete=models.CASCADE)
-    designation_id=models.ForeignKey(Designation,on_delete=models.CASCADE)
-    reporting_to=models.ForeignKey(BasicInfo,on_delete=models.CASCADE)
-    location_id=models.ForeignKey(lo,on_delete=models.CASCADE)
-    Date_of_Joining=models.DateField(null=False)
-    PAN_number=models.CharField(max_length=10,unique=True,null=False)
-    apprisal_manager=models.ForeignKey(BasicInfo,on_delete=models.CASCADE)
-    seating_location=models.ForeignKey(loc,on_delete=models.CASCADE)
-    mentor=models.ForeignKey(BasicInfo,on_delete=models.CASCADE)
-    source_id=models.ForeignKey(SourceofHire,on_delete=models.CASCADE)
-    employee_type=models.ForeignKey(EmployeeType,on_delete=models.CASCADE)
-    employee_Status=models.BooleanField(null=False)
+    class Meta:
+        db_table = 'EmployeeType'
 
-class Summary(models.Model):
-    id=models.IntegerField(primary_key=True)
-    emp_Id=models.ForeignKey(BasicInfo,on_delete=models.CASCADE)
-    job_description=models.CharField(max_length=300)
-    about_me=models.CharField(max_length=300)
-    expertise=models.CharField(max_length=300)
+class JobTitle(models.Model):
+    job_id = models.CharField(primary_key=True, max_length=50)
+    job_title = models.CharField(max_length=50, null=False)
+    added_by = models.CharField(max_length=50, null=False)
+    added_time = models.DateTimeField(auto_now_add=True, blank=True)
+    modified_by = models.CharField(max_length=50, null=False)
+    modified_time = models.TimeField(auto_now_add=True, null=False)
+    is_deleted = models.BooleanField(default=True)
 
-class Depandant(models.Model):
-    dependant_id=models.IntegerField(primary_key=True)
-    emp_Id = models.ForeignKey(BasicInfo, on_delete=models.CASCADE)
-    name=models.CharField(max_length=50,null=False)
-    relationship=models.CharField(max_length=50,null=False)
-    dob=models.DateField
+    class Meta:
+        db_table = 'JobTitle'
+
+class Country(models.Model):
+    country_id = models.CharField(primary_key=True, max_length=50)
+    country_name = models.CharField(max_length=50, null=False)
+
+    class Meta:
+        db_table = 'Country'
