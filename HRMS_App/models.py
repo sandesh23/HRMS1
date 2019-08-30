@@ -180,8 +180,6 @@ class Education(models.Model):
     emp_id = models.ForeignKey(BasicInfo, null=False, on_delete=models.CASCADE)
     degree_id = models.ForeignKey(Degree, null=False,on_delete=models.CASCADE)
     field = models.CharField(max_length=100, null=False)
-    degree_id = models.ForeignKey(Degree, null=False,on_delete=models.CharField)
-    field = models.ForeignKey(Degree, on_delete=models.CASCADE)
     date_of_completion = models.DateField(null=False)
     additional_notes = models.CharField(max_length=50)
 

@@ -5,25 +5,25 @@ from rest_framework.serializers import ModelSerializer
 class BasicInfoSerializer(ModelSerializer):
     class Meta:
         model = BasicInfo
-        fields = "__all__"
+        fields = ['emp_id','first_name','middle_name','last_name','email_id','nic','image']
 
 
 class DepartmentSerializer(ModelSerializer):
     class Meta:
         model = Department
-        fields = "__all__"
+        fields = ['dept_id','dept_name']
 
 
 class RoleSerializer(ModelSerializer):
     class Meta:
         model = Role
-        fields = "__all__"
+        fields = ['role_id','role_name']
 
 
 class DegreeSerializer(ModelSerializer):
     class Meta:
         model = Degree
-        fields = "__all__"
+        fields = ['degree_id','degree_name']
 
 
 class StateSerializer(ModelSerializer):
@@ -35,31 +35,31 @@ class StateSerializer(ModelSerializer):
 class DesignationSerializer(ModelSerializer):
     class Meta:
         model = Designation
-        fields = "__all__"
+        fields = ['designation_id','designation_name']
 
 
 class LocationSerializer(ModelSerializer):
     class Meta:
         model = Location
-        fields = "__all__"
+        fields = ['location_id','location_name']
 
 
 class SourceOfHireSerializer(ModelSerializer):
     class Meta:
         model = SourceOfHire
-        fields = "__all__"
+        fields = ['source_id','source_name']
 
 
 class EmployeeTypeSerializer(ModelSerializer):
     class Meta:
         model = EmployeeType
-        fields = "__all__"
+        fields = ['emp_id','emp_type']
 
 
 class JobTitleSerializer(ModelSerializer):
     class Meta:
         model = JobTitle
-        fields = "__all__"
+        fields = ['job_id','job_title']
 
 
 class CountrySerializer(ModelSerializer):
