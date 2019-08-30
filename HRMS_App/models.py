@@ -9,13 +9,13 @@ class BasicInfo(models.Model):
     middle_name = models.CharField(max_length=50, null=False)
     last_name = models.CharField(max_length=50, null=False)
     email_id = models.EmailField(null=False, unique=True)
-    nic = models.CharField(max_length=16, unique=True, null=False)
+    nic = models.CharField(max_length=16, null=False)
     image = models.ImageField(upload_to='documents/%Y/%M/%d/', max_length=100)
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.DateTimeField(auto_now_add=True, blank=True)
-    is_deleted = models.BooleanField(default=True, null=False)
+    modified_time = models.DateTimeField(auto_now=True, blank=True)
+    is_deleted = models.BooleanField(default=False, null=False)
 
     class Meta:
         db_table = 'Basic_info'
@@ -27,8 +27,8 @@ class Department(models.Model):
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.DateTimeField(auto_now_add=True, blank=True)
-    is_deleted = models.BooleanField(default=True, null=False)
+    modified_time = models.DateTimeField(auto_now=True, blank=True)
+    is_deleted = models.BooleanField(default=False, null=False)
 
     class Meta:
         db_table = 'Department'
@@ -40,8 +40,8 @@ class Role(models.Model):
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.DateTimeField(auto_now_add=True, blank=True)
-    is_deleted = models.BooleanField(default=True, null=False)
+    modified_time = models.DateTimeField(auto_now=True, blank=True)
+    is_deleted = models.BooleanField(default=False, null=False)
 
     class Meta:
         db_table = 'Role'
@@ -53,8 +53,8 @@ class Degree(models.Model):
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.DateTimeField(auto_now_add=True, blank=True)
-    is_deleted = models.BooleanField(default=True, null=False)
+    modified_time = models.DateTimeField(auto_now=True, blank=True)
+    is_deleted = models.BooleanField(default=False, null=False)
 
     class Meta:
         db_table = 'Degree'
@@ -74,8 +74,8 @@ class Designation(models.Model):
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.DateTimeField(auto_now_add=True, blank=True)
-    is_deleted = models.BooleanField(default=True, null=False)
+    modified_time = models.DateTimeField(auto_now=True, blank=True)
+    is_deleted = models.BooleanField(default=False, null=False)
 
     class Meta:
         db_table = 'Designation'
@@ -87,8 +87,8 @@ class Location(models.Model):
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, null=False)
     modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.TimeField(auto_now_add=True, null=False)
-    is_deleted = models.BooleanField(default=True)
+    modified_time = models.TimeField(auto_now=True, null=False)
+    is_deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'Location'
@@ -100,8 +100,8 @@ class SourceOfHire(models.Model):
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.TimeField(auto_now_add=True, null=False)
-    is_deleted = models.BooleanField(default=True)
+    modified_time = models.TimeField(auto_now=True, null=False)
+    is_deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'SourceOfHire'
@@ -113,8 +113,8 @@ class EmployeeType(models.Model):
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.TimeField(auto_now_add=True, null=False)
-    is_deleted = models.BooleanField(default=True)
+    modified_time = models.TimeField(auto_now=True, null=False)
+    is_deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'EmployeeType'
@@ -126,8 +126,8 @@ class JobTitle(models.Model):
     added_by = models.CharField(max_length=50, null=False)
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.TimeField(auto_now_add=True, null=False)
-    is_deleted = models.BooleanField(default=True)
+    modified_time = models.TimeField(auto_now=True, null=False)
+    is_deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'JobTitle'
@@ -145,13 +145,13 @@ class PersonalDetails(models.Model):
     ID = models.IntegerField(primary_key=True)
     Employee_id = models.IntegerField(null=False)
     mobile = models.CharField(max_length=13, null=False)
-    gender = models.CharField(max_length=3, null=False)
+    gender = models.CharField(max_length=3,choices=[('M','Male'),('F','Female')])
     blood_group = models.CharField(max_length=10, null=False)
     other_mobile = models.CharField(max_length=13)
     date_of_birth = models.DateField(null=True)
     permanent_address = models.CharField(max_length=50, null=False)
     present_address = models.CharField(max_length=10, null=False)
-    maretial_status = models.CharField(max_length=1, null=False)
+    marital_status = models.CharField(max_length=3,choices=[('M','Married'),('U','Unmarried')])
     age = models.FloatField(null=False)
     wedding_date = models.DateField()
     spouse_name = models.CharField(max_length=50)
@@ -196,7 +196,7 @@ class WorkDetails(models.Model):
     location_id = models.ForeignKey(Location, on_delete=models.CASCADE)
     Date_of_Joining = models.DateField(null=False)
     PAN_number = models.CharField(max_length=10, unique=True, null=False)
-    apprisal_manager = models.ForeignKey(BasicInfo, on_delete=models.CASCADE, related_name='apprisal_manager')
+    appraisal_manager = models.ForeignKey(BasicInfo, on_delete=models.CASCADE, related_name='appraisal_manager')
     seating_location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='location')
     mentor = models.ForeignKey(BasicInfo, on_delete=models.CASCADE, related_name='mentor')
     source_id = models.ForeignKey(SourceOfHire, on_delete=models.CASCADE)

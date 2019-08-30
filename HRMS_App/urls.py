@@ -23,5 +23,4 @@ router.register('summary', SummaryViewSet)
 router.register('dependant', DependantViewSet)
 
 
-
 urlpatterns = router.urls
