@@ -19,10 +19,16 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import url
 from rest_framework_swagger.views import get_swagger_view
+from HRMS_App import views
+
+
 schema_view = get_swagger_view(title = "HRMS")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/',include('HRMS_App.urls')),
-    url(r'^$',schema_view)
+    url(r'^$',schema_view),
+    path('new_user/',views.add_user),
+    path('login/',views.log_in),
+    path('logout/',views.log_out)
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
