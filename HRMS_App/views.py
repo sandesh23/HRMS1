@@ -8,10 +8,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout,login,authenticate
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
+from HRMS_Project.Logger import *
+
 
 class BasicInfoViewSet(ModelViewSet):
+    logger.info("inside Basic Info Viewset")
     queryset = BasicInfo.objects.all()
+    logger.info("Queryset Prepared")
     serializer_class = BasicInfoSerializer
+    logger.info(" Basic Info Serialiser class Excecuted ")
 
 
 class DepartmentViewSet(ModelViewSet):
@@ -100,28 +105,40 @@ class DependantViewSet(ModelViewSet):
 
 @csrf_exempt
 def add_user(request):
-
+    logger.info("Inside Add_user Method")
+    logger.info("Data collected from Front end")
     User.objects.create_user(first_name=request.POST['first_name'],last_name=request.POST['last_name'],
                    email=request.POST['email'],username=request.POST['username'],
                    password=request.POST['password'],is_superuser=request.POST['is_superuser'],
                    is_staff =request.POST['is_staff'])
+    logger.info("New user created")
+
     return HttpResponse('new user added successfully')
 
 
 @csrf_exempt
 def log_in(request):
+    logger.info("Inside Log in method, Expecting user name and password")
+
     username = request.POST['username']
     password = request.POST['password']
 
+    logger.info("Username and password Entered")
+
     if username and password:
+        logger.info("Authentication begin")
         user=authenticate(username=username,password=password)
         if user:
+            logger.debug("If User Exist")
             login(request,user)
+            logger.info("Authentication done")
             print("login successful")
             return HttpResponse("user log in successful")
         else:
+            logger.error("Getting validation Error due to problem in username and password")
             raise ValidationError("not valid user")
     else:
+        logger.error("Credentials are not Correct")
         return ValidationError("provide data")
 
 
@@ -129,7 +146,8 @@ def log_in(request):
 
 @login_required
 def log_out(request):
-    print('inside log out')
+    logger.info('inside log out')
     logout(request)
+    logger.info('Logout Done')
     return HttpResponse("log out successful")
 
