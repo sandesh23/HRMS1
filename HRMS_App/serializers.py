@@ -9,9 +9,9 @@ class UserSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class BasicInfoSerializer(ModelSerializer):
+class EmpInfoSerializer(ModelSerializer):
     class Meta:
-        model = BasicInfo
+        model = EmpInfo
         fields = ['emp_id','first_name','middle_name','last_name','email_id','nic','image']
 
 

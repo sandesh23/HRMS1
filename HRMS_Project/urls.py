@@ -29,6 +29,9 @@ urlpatterns = [
     url(r'^$',schema_view),
     path('new_user/',views.add_user),
     path('login/',views.log_in),
-    path('logout/',views.log_out)
+    path('logout/',views.log_out),
+#     path('smshome/',views.smshome),
+#     path('sms/',views.sms),
+#     path('x/',views.x),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

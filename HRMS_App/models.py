@@ -1,153 +1,129 @@
 from django.db import models
-
+from .validators import *
+from django.core.validators import validate_image_file_extension
 # Create your models here.
 
-
-class BasicInfo(models.Model):
-    emp_id = models.CharField(primary_key=True, max_length=50)
-    first_name = models.CharField(max_length=50, null=False)
-    middle_name = models.CharField(max_length=50, null=False)
-    last_name = models.CharField(max_length=50, null=False)
-    email_id = models.EmailField(null=False, unique=True)
-    nic = models.CharField(max_length=16, null=False)
-    image = models.ImageField(upload_to='documents/%Y/%M/%d/', max_length=100)
-    added_by = models.CharField(max_length=50, null=False)
+class CommonAbstract(models.Model):
+    added_by = models.CharField(max_length=50, null=False,validators=[name_validators])
     added_time = models.DateTimeField(auto_now_add=True, blank=True)
     modified_by = models.CharField(max_length=50, null=False)
     modified_time = models.DateTimeField(auto_now=True, blank=True)
     is_deleted = models.BooleanField(default=False, null=False)
 
     class Meta:
-        db_table = 'Basic_info'
+        abstract = True
 
 
-class Department(models.Model):
+class EmpInfo(CommonAbstract):
+    emp_id = models.CharField(primary_key=True, max_length=50)
+    first_name = models.CharField(max_length=50, null=False,validators=[name_validators])
+    middle_name = models.CharField(max_length=50, null=False,validators=[name_validators])
+    last_name = models.CharField(max_length=50, null=False,validators=[name_validators])
+    email_id = models.EmailField(null=False, unique=True,validators=[email_validator])
+    nic = models.CharField(max_length=16, null=False,validators=[name_validators])
+    image = models.ImageField(upload_to='documents/%Y/%m/%d/', max_length=100,validators=[validate_image_file_extension])
+
+
+    class Meta:
+        db_table = 'Emp_info'
+
+
+class Department(CommonAbstract):
     dept_id = models.IntegerField(primary_key=True)
-    dept_name = models.CharField(max_length=50, null=False, unique=True)
-    added_by = models.CharField(max_length=50, null=False)
-    added_time = models.DateTimeField(auto_now_add=True, blank=True)
-    modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.DateTimeField(auto_now=True, blank=True)
-    is_deleted = models.BooleanField(default=False, null=False)
+    dept_name = models.CharField(max_length=50, null=False, unique=True,validators=[name_validators])
+
 
     class Meta:
         db_table = 'Department'
 
 
-class Role(models.Model):
+
+class Role(CommonAbstract):
     role_id = models.IntegerField(primary_key=True)
-    role_name = models.CharField(max_length=50, null=False)
-    added_by = models.CharField(max_length=50, null=False)
-    added_time = models.DateTimeField(auto_now_add=True, blank=True)
-    modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.DateTimeField(auto_now=True, blank=True)
-    is_deleted = models.BooleanField(default=False, null=False)
+    role_name = models.CharField(max_length=50, null=False,validators=[name_validators])
+    mobile = models.CharField(max_length=13, null=False, validators=[mobile_regex])
+
 
     class Meta:
         db_table = 'Role'
 
 
-class Degree(models.Model):
+class Degree(CommonAbstract):
     degree_id = models.IntegerField(primary_key=True)
-    degree_name = models.CharField(max_length=50, null=False)
-    added_by = models.CharField(max_length=50, null=False)
-    added_time = models.DateTimeField(auto_now_add=True, blank=True)
-    modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.DateTimeField(auto_now=True, blank=True)
-    is_deleted = models.BooleanField(default=False, null=False)
+    degree_name = models.CharField(max_length=50, null=False,validators=[name_validators])
 
     class Meta:
         db_table = 'Degree'
 
 
+class Country(models.Model):
+    country_id = models.CharField(primary_key=True, max_length=50)
+    country_name = models.CharField(max_length=50, null=False,validators=[name_validators])
+
+    class Meta:
+        db_table = 'Country'
+
+#c1=Country(country_id=111,country_name='Pune')
 class State(models.Model):
     state_id = models.IntegerField(primary_key=True)
-    state_name = models.CharField(max_length=50, null=False)
+    country=models.ForeignKey(Country,on_delete=models.SET_NULL,null=True)
+    state_name = models.CharField(max_length=50, null=False,validators=[name_validators])
 
     class Meta:
         db_table = 'State'
 
-
-class Designation(models.Model):
+#State(state_id=2233,state_name='MH',country=111)
+class Designation(CommonAbstract):
     designation_id = models.IntegerField(primary_key=True)
     designation_name = models.CharField(max_length=50, null=False)
-    added_by = models.CharField(max_length=50, null=False)
-    added_time = models.DateTimeField(auto_now_add=True, blank=True)
-    modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.DateTimeField(auto_now=True, blank=True)
-    is_deleted = models.BooleanField(default=False, null=False)
+
 
     class Meta:
         db_table = 'Designation'
 
 
-class Location(models.Model):
+class Location(CommonAbstract):
     location_id = models.CharField(primary_key=True, max_length=50)
     location_name = models.CharField(max_length=50, null=False)
-    added_by = models.CharField(max_length=50, null=False)
-    added_time = models.DateTimeField(auto_now_add=True, null=False)
-    modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.TimeField(auto_now=True, null=False)
-    is_deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'Location'
 
 
-class SourceOfHire(models.Model):
+class SourceOfHire(CommonAbstract):
     source_id = models.CharField(primary_key=True, max_length=50)
     source_name = models.CharField(max_length=50, null=False)
-    added_by = models.CharField(max_length=50, null=False)
-    added_time = models.DateTimeField(auto_now_add=True, blank=True)
-    modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.TimeField(auto_now=True, null=False)
-    is_deleted = models.BooleanField(default=False)
+
 
     class Meta:
         db_table = 'SourceOfHire'
 
 
-class EmployeeType(models.Model):
+class EmployeeType(CommonAbstract):
     emp_id = models.CharField(primary_key=True, max_length=50)
     emp_type = models.CharField(max_length=50, null=False)
-    added_by = models.CharField(max_length=50, null=False)
-    added_time = models.DateTimeField(auto_now_add=True, blank=True)
-    modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.TimeField(auto_now=True, null=False)
-    is_deleted = models.BooleanField(default=False)
+
 
     class Meta:
         db_table = 'EmployeeType'
 
 
-class JobTitle(models.Model):
+class JobTitle(CommonAbstract):
     job_id = models.CharField(primary_key=True, max_length=50)
     job_title = models.CharField(max_length=50, null=False)
-    added_by = models.CharField(max_length=50, null=False)
-    added_time = models.DateTimeField(auto_now_add=True, blank=True)
-    modified_by = models.CharField(max_length=50, null=False)
-    modified_time = models.TimeField(auto_now=True, null=False)
-    is_deleted = models.BooleanField(default=False)
+
 
     class Meta:
         db_table = 'JobTitle'
 
 
-class Country(models.Model):
-    country_id = models.CharField(primary_key=True, max_length=50)
-    country_name = models.CharField(max_length=50, null=False)
-
-    class Meta:
-        db_table = 'Country'
-
-
 class PersonalDetails(models.Model):
     ID = models.IntegerField(primary_key=True)
     Employee_id = models.IntegerField(null=False)
-    mobile = models.CharField(max_length=13, null=False)
+    mobile = models.CharField(max_length=13, null=False, validators=[mobile_regex])
     gender = models.CharField(max_length=3,choices=[('M','Male'),('F','Female')])
     blood_group = models.CharField(max_length=10, null=False)
-    other_mobile = models.CharField(max_length=13)
+    other_mobile = models.CharField(max_length=13,validators=[mobile_regex])
     date_of_birth = models.DateField(null=True)
     permanent_address = models.CharField(max_length=50, null=False)
     present_address = models.CharField(max_length=10, null=False)
@@ -177,7 +153,7 @@ class WorkExperience(models.Model):
 
 class Education(models.Model):
     education_id = models.IntegerField(primary_key=True)
-    emp_id = models.ForeignKey(BasicInfo, null=False, on_delete=models.CASCADE)
+    emp_id = models.ForeignKey(EmpInfo, null=False, on_delete=models.CASCADE)
     degree_id = models.ForeignKey(Degree, null=False,on_delete=models.CASCADE)
     field = models.CharField(max_length=100, null=False)
     date_of_completion = models.DateField(null=False)
@@ -189,16 +165,16 @@ class Education(models.Model):
 
 class WorkDetails(models.Model):
     id = models.IntegerField(primary_key=True)
-    employee_id = models.ForeignKey(BasicInfo, on_delete=models.CASCADE)
+    employee_id = models.ForeignKey(EmpInfo, on_delete=models.CASCADE)
     department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
     designation_id = models.ForeignKey(Designation, on_delete=models.CASCADE)
-    reporting_to = models.ForeignKey(BasicInfo, on_delete=models.CASCADE, related_name='basic_info_reported_by')
+    reporting_to = models.ForeignKey(EmpInfo, on_delete=models.CASCADE, related_name='basic_info_reported_by')
     location_id = models.ForeignKey(Location, on_delete=models.CASCADE)
     Date_of_Joining = models.DateField(null=False)
     PAN_number = models.CharField(max_length=10, unique=True, null=False)
-    appraisal_manager = models.ForeignKey(BasicInfo, on_delete=models.CASCADE, related_name='appraisal_manager')
+    appraisal_manager = models.ForeignKey(EmpInfo, on_delete=models.CASCADE, related_name='appraisal_manager')
     seating_location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='location')
-    mentor = models.ForeignKey(BasicInfo, on_delete=models.CASCADE, related_name='mentor')
+    mentor = models.ForeignKey(EmpInfo, on_delete=models.CASCADE, related_name='mentor')
     source_id = models.ForeignKey(SourceOfHire, on_delete=models.CASCADE)
     employee_type = models.ForeignKey(EmployeeType, on_delete=models.CASCADE)
     employee_Status = models.BooleanField(null=False)
@@ -209,7 +185,7 @@ class WorkDetails(models.Model):
 
 class Summary(models.Model):
     id = models.IntegerField(primary_key=True)
-    emp_Id = models.ForeignKey(BasicInfo, on_delete=models.CASCADE)
+    emp_Id = models.ForeignKey(EmpInfo, on_delete=models.CASCADE)
     job_description = models.CharField(max_length=300)
     about_me = models.CharField(max_length=300)
     expertise = models.CharField(max_length=300)
@@ -220,7 +196,7 @@ class Summary(models.Model):
 
 class Dependant(models.Model):
     dependant_id = models.IntegerField(primary_key=True)
-    emp_Id = models.ForeignKey(BasicInfo, on_delete=models.CASCADE)
+    emp_Id = models.ForeignKey(EmpInfo, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, null=False)
     relationship = models.CharField(max_length=50, null=False)
     dob = models.DateField(blank=True)

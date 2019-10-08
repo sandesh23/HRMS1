@@ -4,7 +4,7 @@ from .views import *
 
 router = SimpleRouter()
 
-router.register('basicinfo', BasicInfoViewSet)
+router.register('basicinfo', EmpInfoViewSet)
 router.register('department', DepartmentViewSet)
 router.register('role', RoleViewSet)
 router.register('degree', DegreeViewSet)

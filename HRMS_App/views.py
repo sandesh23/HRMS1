@@ -9,9 +9,9 @@ from django.contrib.auth import logout,login,authenticate
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 
-class BasicInfoViewSet(ModelViewSet):
-    queryset = BasicInfo.objects.all()
-    serializer_class = BasicInfoSerializer
+class EmpInfoViewSet(ModelViewSet):
+    queryset = EmpInfo.objects.all()
+    serializer_class = EmpInfoSerializer
 
 
 class DepartmentViewSet(ModelViewSet):
@@ -112,12 +112,10 @@ def add_user(request):
 def log_in(request):
     username = request.POST['username']
     password = request.POST['password']
-
     if username and password:
         user=authenticate(username=username,password=password)
         if user:
             login(request,user)
-            print("login successful")
             return HttpResponse("user log in successful")
         else:
             raise ValidationError("not valid user")
