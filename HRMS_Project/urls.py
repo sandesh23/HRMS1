@@ -14,8 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
+from django.conf.urls import url
+from rest_framework_swagger.views import get_swagger_view
+from HRMS_App import views
 
+
+schema_view = get_swagger_view(title = "HRMS")
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('home/',include('HRMS_App.urls')),
+    url(r'^$',schema_view),
+    path('new_user/',views.add_user),
+    path('login/',views.log_in),
+    path('logout/',views.log_out),
+#     path('smshome/',views.smshome),
+#     path('sms/',views.sms),
+#     path('x/',views.x),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
